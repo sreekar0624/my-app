@@ -1,12 +1,13 @@
 pipeline {
   agent any
-  tools {
-    maven 'maven2'
-  }
   stages{
+    stage ('SCM checkout'){
+      git 'https://github.com/sreekar0624/my-app'
+    }
     stage("Maven Build"){
       steps{
-        sh "mvn clean package"
+        def mvnHome = tool name: 'Maven3', type: 'maven'
+        sh "${mvnHome}/bin/mvn package"
       }
     }
   }
